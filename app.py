@@ -12,7 +12,7 @@ from typing import Optional
 # ----------------------------------------------------------------------------- 
 
 # -----------------------------  Page setup  -----------------------------------
-st.set_page_config(page_title="AI CYOA Adventure", page_icon="🧙", layout="wide")
+st.set_page_config(page_title="Loreweaver", page_icon="🧙", layout="wide")
 
 # Custom CSS for better styling
 st.markdown("""
@@ -83,7 +83,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<h1 class="main-title">🧙 Ultimate AI Choose Your Own Adventure</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="main-title">🧙 LoreWeaver</h1>', unsafe_allow_html=True)
 
 # ------------------------  Enhanced System Prompts  ---------------------------
 def get_standard_system_prompt(character, story_type, backstory=""):
