@@ -95,7 +95,7 @@ Character: {character['name']} the {character['class']} (Background: {character[
 
 CRITICAL STORYTELLING RULES:
 1. **Always write in SECOND PERSON** ("You approach the castle..." not "The character approaches...")
-2. **Write 2-4 vivid paragraphs** (350-450 words total) with rich sensory details
+2. **2. **Write a full chapter of 900–1100 words** (~6–8 detailed paragraphs) with vivid sensory details. each chapter should be a complete richly developed scene.
 3. **Use Markdown formatting**:
    - **Bold** for emphasis, important items, or dramatic moments
    - *Italics* for thoughts, whispers, magical effects, or atmospheric details
@@ -128,7 +128,7 @@ Custom World Setting:
 
 CRITICAL STORYTELLING RULES:
 1. **Always write in SECOND PERSON** ("You step into..." not "The character steps...")
-2. **Write 2-4 vivid paragraphs** (350-450 words total) with rich sensory details
+2. *2. **Write a full chapter of 900–1100 words** (~6–8 detailed paragraphs) with vivid sensory details. This must be a longer, richly developed scene.
 3. **Use Markdown formatting**:
    - **Bold** for emphasis, important elements, or dramatic moments
    - *Italics* for thoughts, whispers, atmospheric effects, or mood
@@ -186,7 +186,7 @@ def initialize_session_state():
         "last_choice": None,
         "game_history": [],
         "session_summaries": [],
-        "adventure_mode": "standard",  # "standard" or "custom"
+        "adventure_mode": "",   # default “unset” so the selector always shows
         "custom_input_value": ""  # Add this line    
         }
     for key, value in defaults.items():
@@ -496,7 +496,7 @@ def generate_session_summary():
         """
         
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             messages=[{"role": "user", "content": summary_prompt}],
             temperature=0.7,
             max_tokens=100
@@ -571,10 +571,10 @@ def call_ai(user_move: str) -> str:
         st.session_state.messages.append({"role": "user", "content": user_move})
         
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             messages=st.session_state.messages,
             temperature=0.8,
-            max_tokens=500,  # Increased for longer chapters
+            max_tokens=1500,  # Increased for longer chapters
             presence_penalty=0.1,
             frequency_penalty=0.1
         )
