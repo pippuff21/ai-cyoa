@@ -635,18 +635,29 @@ def main_game():
             custom_adventure_creator()
         return
     
+    # Check if we need to generate the first story response
+    # We have messages but no AI response yet
+    if len(st.session_state.messages) == 2 and st.session_state.messages[1]["role"] == "user":
+        # First turn - generate initial story
+        with st.spinner("🎭 Beginning your epic adventure..."):
+            call_ai("Begin the adventure with a compelling opening scene")
+        st.rerun()
+        return
+    
     # Display game messages with enhanced formatting
+    chapter_num = 1
     for i, message in enumerate(st.session_state.messages[1:], 1):
         if message["role"] == "assistant":
             st.markdown(f'<div class="story-content">', unsafe_allow_html=True)
-            st.markdown(f"### 📖 Chapter {i}")
+            st.markdown(f"### 📖 Chapter {chapter_num}")
             st.markdown(message["content"])
             st.markdown('</div>', unsafe_allow_html=True)
+            chapter_num += 1
         elif message["role"] == "user" and i > 1:
             st.markdown(f"**🎯 You chose:** *{message['content']}*")
     
-    # Handle user input
-    if len(st.session_state.messages) > 1:
+    # Handle user input - only if we have AI responses
+    if len(st.session_state.messages) > 2:  # System + initial prompt + at least one AI response
         last_ai_message = next((m["content"] for m in reversed(st.session_state.messages) 
                                if m["role"] == "assistant"), "")
         
